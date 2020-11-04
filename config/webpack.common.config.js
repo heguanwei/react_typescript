@@ -1,11 +1,16 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const config = require("./config");
 
+console.log(config.appSrc, '------------------config.appSrc');
 
 module.exports = {
     resolve: {
         // extensions: [".js", ".jsx", ".css", ".json"],
-        extensions: [".ts", ".tsx", ".js", ".json"],
+        extensions: [".ts", ".tsx", ".js", ".jsx"],
+        alias: {
+            "appSrc": `${config.appSrc}`,
+        },
     },
     module: {
         rules: [{
@@ -14,7 +19,7 @@ module.exports = {
             include: path.join(__dirname, '../src')
         },
         {
-            test: /\.ts$/,
+            test: /\.tsx$/,
             use: [
                 {
                     loader: 'ts-loader',

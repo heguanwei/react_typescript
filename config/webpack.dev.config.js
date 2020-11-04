@@ -1,12 +1,14 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackMerge = require("webpack-merge");
-const wepackCommonConfig = require("./webpack.common.config");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const WebpackCommonConfig = require("./webpack.common.config");
+
 
 const webpackDevConfig = {
     devtool: 'eval-source-map', // 指定加source-map的方式
     mode: 'development',
-    entry: path.join(__dirname, '../src/index.js'),
+    entry: path.join(__dirname, '../src/Login.tsx'),
     output: {
         filename: "js/[name].[hash].bundle.js",
         path: path.join(__dirname, '../dist')
@@ -64,15 +66,37 @@ const webpackDevConfig = {
             use: ['babel-loader'],
             include: path.join(__dirname, '../src')
         },
-            {
-                test: /\.ts$/,
-                use: [
-                    {
-                        loader: 'ts-loader',
-                    }
-                ],
-                include: path.join(__dirname, '../src')
-            }]
+        {
+            test: /\.tsx?$/,
+            loader: "awesome-typescript-loader"
+        },
+        {
+            test: /\.(less|css)$/,
+            // use: ['css-hot-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
+            use: [
+                MiniCssExtractPlugin.loader,
+                {
+                    loader: 'less-loader',
+                    options: {
+                        modules: true,
+                        localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
+                        // 使用less默认运行时替换配置的@color样式
+                        // modifyVars: config.color,
+                        javascriptEnabled: true,
+                    },
+                }
+            ]
+        }
+        // {
+        //     test: /\.tsx$/,
+        //     use: [
+        //         {
+        //             loader: 'ts-loader',
+        //         }
+        //     ],
+        //     include: path.join(__dirname, '../src')
+        // }
+        ]
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -86,4 +110,4 @@ const webpackDevConfig = {
     ]
 }
 
-module.exports = WebpackMerge(wepackCommonConfig, webpackDevConfig)
+module.exports = WebpackMerge(WebpackCommonConfig, webpackDevConfig)
