@@ -1,0 +1,9 @@
+node_modules/
+dist/
+/assets
+/core
+/utils/auth/_token.js
+img.js
+/imgDist
+/_assign
+.idea
