@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Routes from "./route/index";
 
 
-class App extends Component<any, any>{
+class App extends Component<{}, {}>{
     render() {
         return (<Routes />)
     }

@@ -10,6 +10,7 @@ module.exports = {
         extensions: [".ts", ".tsx", ".js", ".jsx"],
         alias: {
             "appSrc": `${config.appSrc}`,
+            "antd": path.resolve(__dirname, './node_modules/antd')
         },
     },
     module: {
@@ -19,14 +20,11 @@ module.exports = {
             include: path.join(__dirname, '../src')
         },
         {
-            test: /\.tsx$/,
-            use: [
-                {
-                    loader: 'ts-loader',
-                }
-            ],
+            test: /\.ts[x]$/,
+            loader: "awesome-typescript-loader",
             include: path.join(__dirname, '../src')
-        }]
+        },
+        ]
     },
     plugins: [
         new HtmlWebpackPlugin({

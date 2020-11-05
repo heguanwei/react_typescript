@@ -3,12 +3,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackMerge = require("webpack-merge");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackCommonConfig = require("./webpack.common.config");
-
+const { CheckerPlugin } = require('awesome-typescript-loader');
 
 const webpackDevConfig = {
     devtool: 'eval-source-map', // 指定加source-map的方式
     mode: 'development',
-    entry: path.join(__dirname, '../src/Login.tsx'),
+    entry: path.join(__dirname, '../src/index.tsx'),
     output: {
         filename: "js/[name].[hash].bundle.js",
         path: path.join(__dirname, '../dist')
@@ -61,20 +61,13 @@ const webpackDevConfig = {
         poll: 1000 //每秒询问的文件变更的次数
     },
     module: {
-        rules: [{
-            test: /\.js$/,
-            use: ['babel-loader'],
-            include: path.join(__dirname, '../src')
-        },
-        {
-            test: /\.tsx?$/,
-            loader: "awesome-typescript-loader"
-        },
+        rules: [
         {
             test: /\.(less|css)$/,
             // use: ['css-hot-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
             use: [
                 MiniCssExtractPlugin.loader,
+                "css-loader",
                 {
                     loader: 'less-loader',
                     options: {
@@ -82,9 +75,10 @@ const webpackDevConfig = {
                         localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
                         // 使用less默认运行时替换配置的@color样式
                         // modifyVars: config.color,
-                        javascriptEnabled: true,
+                        // javascriptEnabled: true,
                     },
-                }
+                },
+
             ]
         }
         // {
@@ -107,6 +101,7 @@ const webpackDevConfig = {
             chunksSortMode: 'none',
             hash: true,// 防止缓存
         }),
+        new CheckerPlugin()
     ]
 }
 
