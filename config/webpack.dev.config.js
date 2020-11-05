@@ -3,12 +3,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackMerge = require("webpack-merge");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackCommonConfig = require("./webpack.common.config");
-const { CheckerPlugin } = require('awesome-typescript-loader');
+const config = require('./config');
 
 const webpackDevConfig = {
     devtool: 'eval-source-map', // 指定加source-map的方式
     mode: 'development',
-    entry: path.join(__dirname, '../src/index.tsx'),
+    entry: path.join(__dirname, '../src/index.js'),
     output: {
         filename: "js/[name].[hash].bundle.js",
         path: path.join(__dirname, '../dist')
@@ -62,34 +62,80 @@ const webpackDevConfig = {
     },
     module: {
         rules: [
-        {
-            test: /\.(less|css)$/,
-            // use: ['css-hot-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
-            use: [
-                MiniCssExtractPlugin.loader,
-                "css-loader",
-                {
-                    loader: 'less-loader',
-                    options: {
-                        modules: true,
-                        localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
-                        // 使用less默认运行时替换配置的@color样式
-                        // modifyVars: config.color,
-                        // javascriptEnabled: true,
+        // { test: /\.tsx?$/, loader: "awesome-typescript-loader?configFileName=webpack.tsconfig.json" },
+            {
+                test: /\.(less|css)$/,
+                include:[/node_modules/],
+                // use: ['css-hot-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
+                use: [
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            // modules: true,
+                            // localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
+                            minimize: true
+                        }
+                }],
+            },
+            {
+                test: /\.(less|css)$/,
+                // use: ['css-hot-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
+                use: [
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true,
+                            localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
+                            minimize: true
+                        }
                     },
-                },
-
-            ]
-        }
+                    {
+                        loader: 'postcss-loader'
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            modules: true,
+                            localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
+                            // 使用less默认运行时替换配置的@color样式
+                            // modifyVars: config.color,
+                            javascriptEnabled: true,
+                        },
+                    }],
+                include: [config.appSrc],
+                exclude: [/node_modules/]
+            },
         // {
-        //     test: /\.tsx$/,
+        //     test: /\.(less|css)$/,
+        //     // use: ['css-hot-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
         //     use: [
+        //         MiniCssExtractPlugin.loader,
         //         {
-        //             loader: 'ts-loader',
+        //             loader: 'css-loader',
+        //         },
+        //         {
+        //             loader: 'less-loader',
+        //             options: {
+        //                 // modules: true,
+        //                 // localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
+        //                 // 使用less默认运行时替换配置的@color样式
+        //                 // modifyVars: config.color,
+        //                 // javascriptEnabled: true,
+        //             },
         //         }
-        //     ],
+        //
+        //     ]
+        // },
+        {
+            test: /\.js|jsx$/,
+            use: ['babel-loader'],
+            include: path.join(__dirname, '../src')
+        },
+        // {
+        //     test: /\.ts[x]$/,
+        //     loader: "awesome-typescript-loader",
         //     include: path.join(__dirname, '../src')
-        // }
+        // },
         ]
     },
     plugins: [
@@ -101,7 +147,6 @@ const webpackDevConfig = {
             chunksSortMode: 'none',
             hash: true,// 防止缓存
         }),
-        new CheckerPlugin()
     ]
 }
 

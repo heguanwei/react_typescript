@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-// import { Form, Input, Button, Checkbox } from "antd";
-// import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { Form, Input, Button, Checkbox } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
-class Login extends Component<{}, {}>{
-    constructor(props: {}) {
+class Login extends Component{
+    constructor(props) {
         super(props);
         this.state = {
             user_name: "",
@@ -11,13 +11,13 @@ class Login extends Component<{}, {}>{
         }
     }
 
-    onFinish = values => {
+    onFinish = (values) => {
         console.log('Received values of form: ', values);
     };
 
     render(){
         return (<div className={'Login'}>
-            {/*<Form
+            <Form
                 name="normal_login"
                 className="login-form"
                 initialValues={{ remember: true }}
@@ -55,8 +55,7 @@ class Login extends Component<{}, {}>{
                     </Button>
                     Or <a href="">register now!</a>
                 </Form.Item>
-            </Form>*/}
-            登录
+            </Form>
         </div>)
     }
 }

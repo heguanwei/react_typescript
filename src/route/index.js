@@ -1,7 +1,6 @@
 import React from "react";
 import {HashRouter, Route, Switch}  from "react-router-dom";
-import './index.less';
-import Login from "./../pages/Login/Login";
+import Login from "../pages/Login/Login";
 
 const Routes = () => {
     return <HashRouter>
