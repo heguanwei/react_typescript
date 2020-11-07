@@ -1,6 +1,6 @@
 import React from "react";
 import {HashRouter, Route, Switch}  from "react-router-dom";
-import Login from "@src/pages/Login/Login";
+import Login from "../pages/Login/Login";
 
 const Routes = () => (
     <HashRouter>

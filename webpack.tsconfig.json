@@ -18,7 +18,10 @@
     "useBabel": true,
     "useCache": true,
     "emitRequireType": false
-  },  
+  },
+  "include": [
+    "./src"
+  ],
   "exclude": [
     "logs",
     "node_modules",

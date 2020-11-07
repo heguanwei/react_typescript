@@ -1,10 +1,10 @@
 import * as React from "react";
 import * as ReactDOM from 'react-dom';
-import Routes from "./route";
+// import Routes from "./route";
 import './index.less';
 class App extends React.Component<any, any>{
     render() {
-        return (<Routes />)
+        return (<div>typescript config</div>)
     }
 }
 

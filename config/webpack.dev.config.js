@@ -69,6 +69,41 @@ const webpackDevConfig = {
                 // use: ['css-hot-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
                 use: [
                     MiniCssExtractPlugin.loader,
+                    // {
+                    //     loader: require.resolve('typings-for-css-modules-loader'),
+                    //     options: {
+                    //         modules: true,
+                    //         namedExport: true,
+                    //         camelCase: true,
+                    //         sass: true,
+                    //         localIdentName: '[name]__[local]__[hash:base64:5]'
+                    //     }
+                    // },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            // modules: true,
+                            // localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
+                            minimize: true,
+                        }
+                    }
+                ],
+            },
+            {
+                test: /\.(less|css)$/,
+                // use: ['css-hot-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    // {
+                    //     loader: require.resolve('typings-for-css-modules-loader'),
+                    //     options: {
+                    //         modules: true,
+                    //         namedExport: true,
+                    //         camelCase: true,
+                    //         sass: true,
+                    //         localIdentName: '[name]__[local]__[hash:base64:5]'
+                    //     }
+                    // },
                     {
                         loader: 'css-loader',
                         options: {
@@ -76,37 +111,19 @@ const webpackDevConfig = {
                             // localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
                             minimize: true
                         }
-                    }],
-            },
-            {
-                test: /\.(less|css)$/,
-                // use: ['css-hot-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true,
-                            localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
-                            minimize: true
-                        }
                     },
-                    {
-                        loader: 'postcss-loader'
-                    },
-                    {
-                        loader: 'typings-for-css-modules'
-                    },
+                    { loader: 'postcss-loader' },
                     {
                         loader: 'less-loader',
                         options: {
-                            modules: true,
-                            localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
+                            // modules: true,
+                            // localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
                             // 使用less默认运行时替换配置的@color样式
                             // modifyVars: config.color,
                             javascriptEnabled: true,
                         },
-                    }],
+                    }
+                ],
                 include: [config.appSrc],
                 exclude: [/node_modules/]
             },
@@ -119,11 +136,11 @@ const webpackDevConfig = {
                 test: /\.tsx$/,
                 use: [
                     {
-                        loader: 'ts-loader',
-                        options: {
-                            transpileOnly: true,
-                            ts: {}
-                        }
+                        loader: 'awesome-typescript-loader',
+                        // options: {
+                        //     transpileOnly: true,
+                        //     ts: {}
+                        // }
                     }
                 ],
                 // loader: "awesome-typescript-loader",
