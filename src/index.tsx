@@ -1,8 +1,8 @@
-import React, {Component} from "react";
-import ReactDOM from 'react-dom';
+import * as React from "react";
+import * as ReactDOM from 'react-dom';
 import Routes from "./route";
-
-class App extends Component{
+import './index.less';
+class App extends React.Component<any, any>{
     render() {
         return (<Routes />)
     }

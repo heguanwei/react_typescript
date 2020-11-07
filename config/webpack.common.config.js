@@ -10,7 +10,7 @@ module.exports = {
         // extensions: [".ts", ".tsx", ".js", ".jsx"],
         extensions: [ ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
         alias: {
-            "appSrc": `${config.appSrc}`,
+            "@src": `${config.appSrc}`,
         },
     },
     module: {

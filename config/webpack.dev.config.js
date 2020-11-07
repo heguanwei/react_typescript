@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackMerge = require("webpack-merge");
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackCommonConfig = require("./webpack.common.config");
 const config = require('./config');
@@ -8,7 +9,7 @@ const config = require('./config');
 const webpackDevConfig = {
     devtool: 'eval-source-map', // 指定加source-map的方式
     mode: 'development',
-    entry: path.join(__dirname, '../src/index.js'),
+    entry: path.join(__dirname, '../src/index.tsx'),
     output: {
         filename: "js/[name].[hash].bundle.js",
         path: path.join(__dirname, '../dist')
@@ -62,12 +63,12 @@ const webpackDevConfig = {
     },
     module: {
         rules: [
-        // { test: /\.tsx?$/, loader: "awesome-typescript-loader?configFileName=webpack.tsconfig.json" },
             {
                 test: /\.(less|css)$/,
-                include:[/node_modules/],
+                include: [/node_modules/],
                 // use: ['css-hot-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
                 use: [
+                    MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: {
@@ -75,12 +76,13 @@ const webpackDevConfig = {
                             // localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
                             minimize: true
                         }
-                }],
+                    }],
             },
             {
                 test: /\.(less|css)$/,
                 // use: ['css-hot-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
                 use: [
+                    MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: {
@@ -91,6 +93,9 @@ const webpackDevConfig = {
                     },
                     {
                         loader: 'postcss-loader'
+                    },
+                    {
+                        loader: 'typings-for-css-modules'
                     },
                     {
                         loader: 'less-loader',
@@ -105,48 +110,43 @@ const webpackDevConfig = {
                 include: [config.appSrc],
                 exclude: [/node_modules/]
             },
-        // {
-        //     test: /\.(less|css)$/,
-        //     // use: ['css-hot-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
-        //     use: [
-        //         MiniCssExtractPlugin.loader,
-        //         {
-        //             loader: 'css-loader',
-        //         },
-        //         {
-        //             loader: 'less-loader',
-        //             options: {
-        //                 // modules: true,
-        //                 // localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
-        //                 // 使用less默认运行时替换配置的@color样式
-        //                 // modifyVars: config.color,
-        //                 // javascriptEnabled: true,
-        //             },
-        //         }
-        //
-        //     ]
-        // },
-        {
-            test: /\.js|jsx$/,
-            use: ['babel-loader'],
-            include: path.join(__dirname, '../src')
-        },
-        // {
-        //     test: /\.ts[x]$/,
-        //     loader: "awesome-typescript-loader",
-        //     include: path.join(__dirname, '../src')
-        // },
+            // {
+            //     test: /\.js|jsx$/,
+            //     loader: 'babel-loader',
+            //     include: path.join(__dirname, '../src')
+            // },
+            {
+                test: /\.tsx$/,
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            transpileOnly: true,
+                            ts: {}
+                        }
+                    }
+                ],
+                // loader: "awesome-typescript-loader",
+                include: path.join(__dirname, '../src'),
+                exclude: /node_modules/
+            },
         ]
     },
     plugins: [
+        new MiniCssExtractPlugin({
+            filename: "[name].[hash].css",
+            chunkFilename: "[id].[hash].css"
+        }),
         new HtmlWebpackPlugin({
             title: '',
             filename: 'index.html',
-            template:  path.join(__dirname, '../public/index.html'),
+            template: path.join(__dirname, '../public/index.html'),
             // favicon: config.favicon,
             chunksSortMode: 'none',
             hash: true,// 防止缓存
+            minify: false
         }),
+        new webpack.WatchIgnorePlugin([/css\.d\.ts$/, /less\.d\.ts$/])
     ]
 }
 
