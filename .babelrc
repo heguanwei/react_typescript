@@ -8,7 +8,6 @@
         "targets": {
           "node": "current",
           "browsers": [
-            "> 1%",
             "last 2 versions",
             "not ie <= 8"
           ]
@@ -17,6 +16,7 @@
       }
     ],
     "@babel/preset-react",
+    "@babel/preset-typescript"
   ],
   "plugins": [
     [
@@ -31,9 +31,10 @@
         "libraryName": "antd",
         "libraryDirectory":"es",
         "style": "css"
-
       }
     ]
   ],
   "sourceMaps": true
 }
+// @babel/preset-env 根据配置的目标环境自动采用需要的babel插件。
+// 支持每个浏览器最近的两个版本和IE大于8的版本所需的polyfill和代码转译。

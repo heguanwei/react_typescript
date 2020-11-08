@@ -2,13 +2,9 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const config = require("./config");
 
-console.log(config.appSrc, '------------------config.appSrc');
-
 module.exports = {
     resolve: {
-        // extensions: [".js", ".jsx", ".css", ".json"],
-        // extensions: [".ts", ".tsx", ".js", ".jsx"],
-        extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+        extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js", "jsx"],
         alias: {
             "@src": `${config.appSrc}`,
         },

@@ -3,7 +3,7 @@ module.exports = {
         require('autoprefixer')({
             overrideBrowserslist: [
                 'last 2 versions',
-                '> 1%'
+                '> 0.01%'
             ]
         })
     ]

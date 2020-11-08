@@ -112,7 +112,9 @@ const webpackDevConfig = {
                             minimize: true
                         }
                     },
-                    { loader: 'postcss-loader' },
+                    {
+                        loader: 'postcss-loader',
+                    },
                     {
                         loader: 'less-loader',
                         options: {
@@ -127,24 +129,10 @@ const webpackDevConfig = {
                 include: [config.appSrc],
                 exclude: [/node_modules/]
             },
-            // {
-            //     test: /\.js|jsx$/,
-            //     loader: 'babel-loader',
-            //     include: path.join(__dirname, '../src')
-            // },
             {
-                test: /\.tsx$/,
-                use: [
-                    {
-                        loader: 'awesome-typescript-loader',
-                        // options: {
-                        //     transpileOnly: true,
-                        //     ts: {}
-                        // }
-                    }
-                ],
-                // loader: "awesome-typescript-loader",
-                include: path.join(__dirname, '../src'),
+                test: /\.js|jsx|tsx|ts$/,
+                loader: 'babel-loader',
+                include: [config.appSrc],
                 exclude: /node_modules/
             },
         ]
