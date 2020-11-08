@@ -1,7 +1,8 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import './index.less';
+// @ts-ignore
+import * as style from './login.less';
 
 class Login extends React.Component<any, any>{
     constructor(props: object) {
@@ -17,10 +18,10 @@ class Login extends React.Component<any, any>{
     };
 
     render(){
-        return (<div className={'login'}>
+        return (<div className={style.login}>
             <Form
                 name={"normal_login"}
-                className={'login_form'}
+                className={style.login_form}
                 initialValues={{ remember: true }}
                 onFinish={this.onFinish}
             >
@@ -28,14 +29,14 @@ class Login extends React.Component<any, any>{
                     name="username"
                     rules={[{ required: true, message: 'Please input your Username!' }]}
                 >
-                    <Input prefix={<UserOutlined className={'site_form_item_icon'} />} placeholder="Username" />
+                    <Input prefix={<UserOutlined className={style.site_form_item_icon} />} placeholder="Username" />
                 </Form.Item>
                 <Form.Item
                     name="password"
                     rules={[{ required: true, message: 'Please input your Password!' }]}
                 >
                     <Input
-                        prefix={<LockOutlined className={'site_form_item_icon'} />}
+                        prefix={<LockOutlined className={style.site_form_item_icon} />}
                         type="password"
                         placeholder="Password"
                     />
@@ -45,13 +46,13 @@ class Login extends React.Component<any, any>{
                         <Checkbox>Remember me</Checkbox>
                     </Form.Item>
 
-                    <a className={'login_form_forgot'} href="javascript:void(0)">
+                    <a className={style.login_form_forgot} href="javascript:void(0)">
                         Forgot password
                     </a>
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type="primary" htmlType="submit" className={'login_form_button'}>
+                    <Button type="primary" htmlType="submit" className={style.login_form_button}>
                         Log in
                     </Button>
                     Or <a href="javascript:void(0)">register now!</a>

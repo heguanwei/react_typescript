@@ -91,24 +91,13 @@ const webpackDevConfig = {
             },
             {
                 test: /\.(less|css)$/,
-                // use: ['css-hot-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
                 use: [
                     MiniCssExtractPlugin.loader,
-                    // {
-                    //     loader: require.resolve('typings-for-css-modules-loader'),
-                    //     options: {
-                    //         modules: true,
-                    //         namedExport: true,
-                    //         camelCase: true,
-                    //         sass: true,
-                    //         localIdentName: '[name]__[local]__[hash:base64:5]'
-                    //     }
-                    // },
                     {
                         loader: 'css-loader',
                         options: {
-                            // modules: true,
-                            // localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
+                            modules: true,
+                            localIdentName: '[name]__[local]--[hash:base64:8]',  // 生成样式的命名规则
                             minimize: true
                         }
                     },
@@ -118,10 +107,10 @@ const webpackDevConfig = {
                     {
                         loader: 'less-loader',
                         options: {
-                            // modules: true,
-                            // localIdentName: '[name]__[local]--[hash:base64:5]',  // 生成样式的命名规则
+                            modules: true,
+                            localIdentName: '[name]__[local]--[hash:base64:8]',  // 生成样式的命名规则
                             // 使用less默认运行时替换配置的@color样式
-                            // modifyVars: config.color,
+                            modifyVars: config.color,
                             javascriptEnabled: true,
                         },
                     }

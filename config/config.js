@@ -6,4 +6,5 @@ const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
 
 module.exports = {
     appSrc: resolveApp("src"),
+    color: '#000'
 }
