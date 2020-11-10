@@ -1,6 +1,8 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import {setUserInfoAction} from '@/redux/actionTypes/login';
 // @ts-ignore
 import * as style from './login.less';
 
@@ -13,7 +15,10 @@ class Login extends React.Component<any, any>{
         }
     }
 
-    onFinish = (values: string) => {
+
+
+    onFinish = (values: any) => {
+        this.props.setUserInfo({username: values.username, password: values.password});
         console.log('Received values of form: ', values);
     };
 
@@ -61,5 +66,17 @@ class Login extends React.Component<any, any>{
         </div>)
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        userInfo: state.login
+    }
+}
 
-export default Login;
+const mapDispatchToProps = (dispatch ) => {
+    return {
+        setUserInfo: (data) => dispatch(setUserInfoAction(data))
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

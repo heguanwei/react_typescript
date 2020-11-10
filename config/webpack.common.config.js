@@ -6,7 +6,7 @@ module.exports = {
     resolve: {
         extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js", "jsx"],
         alias: {
-            "@src": `${config.appSrc}`,
+            "@": `${config.appSrc}`,
         },
     },
     module: {
